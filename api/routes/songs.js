@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
+    // find songs in database by titles and artists
     const song ={
         title : req.body.title,
         artist : req.body.artist
