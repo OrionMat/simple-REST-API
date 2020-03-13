@@ -2,8 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
+    const album ={
+        title : req.body.title,
+        artist : req.body.artist
+    };
     res.status(200).json({
-        message : 'Handle GET requests to /albums'
+        message : 'Handle GET requests to /albums',
+        gotAlbums : album
     });
 });
 

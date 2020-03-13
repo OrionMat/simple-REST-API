@@ -1,13 +1,15 @@
 // importing libraries
 const express = require('express');
 const app = express();
-const bodyParser = require(body-parser);
+const bodyParser = require('body-parser');
 
 const songRoutes = require('./api/routes/songs');
 const albumRoutes = require('./api/routes/albums');
 
+// url and json bodys can be parsed
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
 app.use('/songs', songRoutes);
 app.use('/albums', albumRoutes);
 
