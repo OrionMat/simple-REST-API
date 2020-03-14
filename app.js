@@ -6,6 +6,19 @@ const bodyParser = require('body-parser');
 const songRoutes = require('./api/routes/songs');
 const albumRoutes = require('./api/routes/albums');
 
+// database connection
+var mysql = require("mysql");
+app.use(function(req, res, next){
+	res.locals.connection = mysql.createConnection({
+		host     : 'localhost',
+		user     : 'root',
+		password : '',
+		database : 'musicdatabase'
+	});
+	res.locals.connection.connect();
+	next();
+});
+
 // url and json bodys can be parsed
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());

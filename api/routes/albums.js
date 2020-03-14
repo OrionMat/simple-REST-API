@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    // find albums in database by titles and artists
     const album ={
         title : req.body.title,
         artist : req.body.artist
@@ -13,22 +12,18 @@ router.get('/', (req, res, next) => {
     });
 });
 
-// router.post('/', (req, res, next) => {
-//     res.status(200).json({
-//         message : 'Handle POST requests to /albums'
-//     });
-// });
-
-// router.patch('/', (req, res, next) => {
-//     res.status(200).json({
-//         message : 'Handle PATCH requests to /albums'
-//     });
-// });
-
-// router.delete('/', (req, res, next) => {
-//     res.status(200).json({
-//         message : 'Handle DELETE requests to /albums'
-//     });
-// });
+router.get('/:title', function(req, res, next) {
+    // find albums in database by titles
+    const title = req.params.title;
+    const queryString = 'SELECT * FROM albums WHERE title = ?';
+	res.locals.connection.query(queryString, [title], function (error, rows, fields) {
+		if (error){
+            res.status(500).json({
+                message : 'failed to query for albums'
+            });
+        } 
+        res.json(rows);
+	});
+});
 
 module.exports = router;
