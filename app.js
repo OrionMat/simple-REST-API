@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 const songRoutes = require('./api/routes/songs');
 const albumRoutes = require('./api/routes/albums');
+const artistRoutes = require('./api/routes/artists');
 
 // database connection
 var mysql = require("mysql");
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 
 app.use('/songs', songRoutes);
 app.use('/albums', albumRoutes);
+app.use('/artists', artistRoutes);
 
 // error handeling
 app.use((req, res, next) => {
