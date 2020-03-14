@@ -13,11 +13,20 @@ router.get('/', (req, res, next) => {
     });
 });
 
-router.get('/:title', function(req, res, next) {
+router.get('/:title', (req, res, next) => {
     // find songs in database by titles
     const title = req.params.title;
     const queryString = 'SELECT * FROM songs WHERE title = ?';
-	res.locals.connection.query(queryString, [title], function (error, rows, fields) {
+    
+    // database connection
+    const connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : 'root',
+        password : '',
+        database : 'musicdatabase'
+    });
+    
+    connection.query(queryString, [title], (error, rows, fields) => {
 		if (error){
             res.status(500).json({
                 message : 'failed to query for songs'
