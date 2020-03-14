@@ -13,18 +13,29 @@ router.get('/', (req, res, next) => {
     });
 });
 
-router.get('/:name', function(req, res, next) {
+
+router.get('/:name', (req, res, next) => {
     // find artists in database by names
     const name = req.params.name;
     const queryString = 'SELECT * FROM artists WHERE name = ?';
-	res.locals.connection.query(queryString, [name], function (error, rows, fields) {
+    
+    // database connection
+    const connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : 'root',
+        password : '',
+        database : 'musicdatabase'
+    });
+    
+    connection.query(queryString, [name], (error, rows, fields) => {
 		if (error){
             res.status(500).json({
                 message : 'failed to query for artists'
             });
         } 
         res.json(rows);
-	});
+    });
 });
+
 
 module.exports = router;
