@@ -15,18 +15,18 @@ CREATE SCHEMA IF NOT EXISTS `musicDatabase` DEFAULT CHARACTER SET utf8 ;
 USE `musicDatabase` ;
 
 -- -----------------------------------------------------
--- Table `musicDatabase`.`Song Orders`
+-- Table `musicDatabase`.`song_orders`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `musicDatabase`.`Song Orders` (
+CREATE TABLE IF NOT EXISTS `musicDatabase`.`song_orders` (
   `idSong Orders` INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`idSong Orders`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `musicDatabase`.`Artists`
+-- Table `musicDatabase`.`artists`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `musicDatabase`.`Artists` (
+CREATE TABLE IF NOT EXISTS `musicDatabase`.`artists` (
   `idArtists` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idArtists`))
@@ -34,9 +34,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `musicDatabase`.`Songs`
+-- Table `musicDatabase`.`songs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `musicDatabase`.`Songs` (
+CREATE TABLE IF NOT EXISTS `musicDatabase`.`songs` (
   `idSongs` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
   `price` DECIMAL(5,2) NOT NULL,
@@ -48,30 +48,30 @@ CREATE TABLE IF NOT EXISTS `musicDatabase`.`Songs` (
   INDEX `fk_Songs_Artists1_idx` (`Artists_idArtists` ASC) VISIBLE,
   CONSTRAINT `fk_Songs_Song Orders1`
     FOREIGN KEY (`Song Orders_idSong Orders`)
-    REFERENCES `musicDatabase`.`Song Orders` (`idSong Orders`)
+    REFERENCES `musicDatabase`.`song_orders` (`idSong Orders`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Songs_Artists1`
     FOREIGN KEY (`Artists_idArtists`)
-    REFERENCES `musicDatabase`.`Artists` (`idArtists`)
+    REFERENCES `musicDatabase`.`artists` (`idArtists`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `musicDatabase`.`Album Orders`
+-- Table `musicDatabase`.`album_orders`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `musicDatabase`.`Album Orders` (
+CREATE TABLE IF NOT EXISTS `musicDatabase`.`album_orders` (
   `idAlbum Orders` INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`idAlbum Orders`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `musicDatabase`.`Albums`
+-- Table `musicDatabase`.`albums`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `musicDatabase`.`Albums` (
+CREATE TABLE IF NOT EXISTS `musicDatabase`.`albums` (
   `idAlbums` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
   `price` DECIMAL(5,2) NOT NULL,
@@ -82,21 +82,21 @@ CREATE TABLE IF NOT EXISTS `musicDatabase`.`Albums` (
   INDEX `fk_Albums_Artists1_idx` (`Artists_idArtists` ASC) VISIBLE,
   CONSTRAINT `fk_Albums_Album Orders1`
     FOREIGN KEY (`Album Orders_idAlbum Orders`)
-    REFERENCES `musicDatabase`.`Album Orders` (`idAlbum Orders`)
+    REFERENCES `musicDatabase`.`album_orders` (`idAlbum Orders`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Albums_Artists1`
     FOREIGN KEY (`Artists_idArtists`)
-    REFERENCES `musicDatabase`.`Artists` (`idArtists`)
+    REFERENCES `musicDatabase`.`artists` (`idArtists`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `musicDatabase`.`Song_Album`
+-- Table `musicDatabase`.`song_album`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `musicDatabase`.`Song_Album` (
+CREATE TABLE IF NOT EXISTS `musicDatabase`.`song_album` (
   `Songs_idSongs` INT NOT NULL,
   `Albums_idAlbums` INT NOT NULL,
   `track number` INT NULL,
@@ -105,12 +105,12 @@ CREATE TABLE IF NOT EXISTS `musicDatabase`.`Song_Album` (
   INDEX `fk_Songs_has_Albums_Songs_idx` (`Songs_idSongs` ASC) VISIBLE,
   CONSTRAINT `fk_Songs_has_Albums_Songs`
     FOREIGN KEY (`Songs_idSongs`)
-    REFERENCES `musicDatabase`.`Songs` (`idSongs`)
+    REFERENCES `musicDatabase`.`songs` (`idSongs`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Songs_has_Albums_Albums1`
     FOREIGN KEY (`Albums_idAlbums`)
-    REFERENCES `musicDatabase`.`Albums` (`idAlbums`)
+    REFERENCES `musicDatabase`.`albums` (`idAlbums`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
